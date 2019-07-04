@@ -1,9 +1,29 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
+import { 
+  getIndex ,
+  getRegister, 
+  postRegister,
+  getLogin,
+  postLogin,
+  getProfile,
+  updateProfile,
+  forgotPassword,
+  updateForgotPassword,
+  GetresetPassword,
+  PutresetPassword
+  } from '../controllers';
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', getIndex);  
+router.get('/register', getRegister);
+router.post('/register', postRegister);
+router.get('/login', getLogin);
+router.post('/login', postLogin);
+router.get('/profile', getProfile);
+router.put('/profile/:user_id', updateProfile);
+router.get('/forgot', forgotPassword);
+router.put('/forgot', updateForgotPassword);
+router.get('/reset/:token', GetresetPassword);
+router.put('/reset/:token', PutresetPassword);
 
-module.exports = router;
+export default router;
