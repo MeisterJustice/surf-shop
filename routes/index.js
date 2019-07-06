@@ -5,6 +5,7 @@ import {
   postRegister,
   getLogin,
   postLogin,
+  getLogout,
   getProfile,
   updateProfile,
   forgotPassword,
@@ -12,18 +13,22 @@ import {
   GetresetPassword,
   PutresetPassword
   } from '../controllers';
+  import {
+    errorHandler
+  } from '../middleware';
 const router = express.Router();
 
-router.get('/', getIndex);  
-router.get('/register', getRegister);
-router.post('/register', postRegister);
-router.get('/login', getLogin);
-router.post('/login', postLogin);
-router.get('/profile', getProfile);
-router.put('/profile/:user_id', updateProfile);
-router.get('/forgot', forgotPassword);
-router.put('/forgot', updateForgotPassword);
-router.get('/reset/:token', GetresetPassword);
-router.put('/reset/:token', PutresetPassword);
+router.get('/', errorHandler(getIndex));  
+router.get('/register', errorHandler(getRegister));
+router.post('/register', errorHandler(postRegister));
+router.get('/login', errorHandler(getLogin));
+router.post('/login', errorHandler(postLogin));
+router.get('/logout', getLogout);
+router.get('/profile', errorHandler(getProfile));
+router.put('/profile/:user_id', errorHandler(updateProfile));
+router.get('/forgot', errorHandler(forgotPassword));
+router.put('/forgot', errorHandler(updateForgotPassword));
+router.get('/reset/:token', errorHandler(GetresetPassword));
+router.put('/reset/:token', errorHandler(PutresetPassword));
 
 export default router;

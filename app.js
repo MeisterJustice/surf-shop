@@ -4,8 +4,14 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
+import passport from 'passport';
+import session from 'express-session';
+import methodOverride from 'method-override';
 
-// importing routes
+// import model
+import User from './models/user';
+
+// import routes
 import indexRouter from './routes/index';
 import postsRouter from './routes/posts';
 import reviewsRouter from './routes/reviews';
@@ -22,7 +28,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
+// express-session setup
+app.use(session({
+  secret: 'the chief',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport setup
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// mount routes
 app.use('/', indexRouter);
 app.use('/posts', postsRouter);
 app.use('/posts/:id/reviews', reviewsRouter);
@@ -43,7 +66,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 // Set port
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 3000);
 
 // Use mongoose promise library
 mongoose.Promise = require('bluebird');

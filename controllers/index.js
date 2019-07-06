@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-
+import passport from 'passport';
+import User from '../models/user';
 
 // @ Description
 // @ Route
@@ -19,7 +20,13 @@ export const getRegister = async (req, res, next) => {
 // @ Route
 // @ Access Control
 export const postRegister = async (req, res, next) => {
-    res.send("post register");
+    const newUser = new User({
+        username: req.body.username,
+        email: req.body.email,
+        image: req.body.image
+    });
+    await User.register(newUser, req.body.password);
+    res.redirect('/');
 }
 
 // @ Description
@@ -33,7 +40,18 @@ export const getLogin = async (req, res, next) => {
 // @ Route
 // @ Access Control
 export const postLogin = async (req, res, next) => {
-    res.send("post login");
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    })(req, res, next);
+}
+
+// @ Description
+// @ Route
+// @ Access Control
+export const getLogout = async (req, res, next) => {
+    req.logout();
+    res.redirect('/');
 }
 
 // @ Description

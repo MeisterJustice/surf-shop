@@ -9,15 +9,18 @@ import {
     updatePost,
     deletePost
 } from '../controllers/posts';
+import {
+    errorHandler
+  } from '../middleware';
 
 /* GET home page. */
-router.get('/', getPosts);
-router.get('/new', newPost);
-router.post('/', createPost);
-router.get('/:id', showPost);
-router.get('/:id/edit', editPost);
-router.put('/:id', updatePost);
-router.delete('/:id', deletePost);
+router.get('/', errorHandler(getPosts));
+router.get('/new', errorHandler(newPost));
+router.post('/', errorHandler(createPost));
+router.get('/:id', errorHandler(showPost));
+router.get('/:id/edit', errorHandler(editPost));
+router.put('/:id', errorHandler(updatePost));
+router.delete('/:id', errorHandler(deletePost));
 
 
 export default router;
