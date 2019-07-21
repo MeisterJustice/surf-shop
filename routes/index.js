@@ -14,21 +14,21 @@ import {
   PutresetPassword
   } from '../controllers';
   import {
-    errorHandler
+    asyncErrorHandler
   } from '../middleware';
 const router = express.Router();
 
-router.get('/', errorHandler(getIndex));  
-router.get('/register', errorHandler(getRegister));
-router.post('/register', errorHandler(postRegister));
-router.get('/login', errorHandler(getLogin));
-router.post('/login', errorHandler(postLogin));
+router.get('/', asyncErrorHandler(getIndex));  
+router.get('/register', getRegister);
+router.post('/register', asyncErrorHandler(postRegister));
+router.get('/login', getLogin);
+router.post('/login', asyncErrorHandler(postLogin));
 router.get('/logout', getLogout);
-router.get('/profile', errorHandler(getProfile));
-router.put('/profile/:user_id', errorHandler(updateProfile));
-router.get('/forgot', errorHandler(forgotPassword));
-router.put('/forgot', errorHandler(updateForgotPassword));
-router.get('/reset/:token', errorHandler(GetresetPassword));
-router.put('/reset/:token', errorHandler(PutresetPassword));
+router.get('/profile', asyncErrorHandler(getProfile));
+router.put('/profile/:user_id', asyncErrorHandler(updateProfile));
+router.get('/forgot', asyncErrorHandler(forgotPassword));
+router.put('/forgot', asyncErrorHandler(updateForgotPassword));
+router.get('/reset/:token', asyncErrorHandler(GetresetPassword));
+router.put('/reset/:token', asyncErrorHandler(PutresetPassword));
 
 export default router;

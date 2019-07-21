@@ -1,5 +1,7 @@
 import express from 'express';
 const router = express.Router();
+import multer from 'multer';
+const upload = multer({'dest': 'uploads/'});
 import {
     getPosts,
     newPost,
@@ -10,17 +12,17 @@ import {
     deletePost
 } from '../controllers/posts';
 import {
-    errorHandler
+    asyncErrorHandler
   } from '../middleware';
 
 /* GET home page. */
-router.get('/', errorHandler(getPosts));
-router.get('/new', errorHandler(newPost));
-router.post('/', errorHandler(createPost));
-router.get('/:id', errorHandler(showPost));
-router.get('/:id/edit', errorHandler(editPost));
-router.put('/:id', errorHandler(updatePost));
-router.delete('/:id', errorHandler(deletePost));
+router.get('/', asyncErrorHandler(getPosts));
+router.get('/new', newPost);
+router.post('/', upload.array('images', 4), asyncErrorHandler(createPost));
+router.get('/:id', asyncErrorHandler(showPost));
+router.get('/:id/edit', asyncErrorHandler(editPost));
+router.put('/:id', asyncErrorHandler(updatePost));
+router.delete('/:id', asyncErrorHandler(deletePost));
 
 
 export default router;

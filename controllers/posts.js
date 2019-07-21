@@ -1,5 +1,10 @@
-import mongoose from 'mongoose';
 import Post from '../models/post';
+import cloudinary from 'cloudinary';
+cloudinary.config({
+    cloud_name: 'djzeufu4j',
+    api_key: '924695718565452',
+    api_secret: process.env.CLOUDINARY_SECRET
+});
 
 
 // @ Description
@@ -21,7 +26,15 @@ export const newPost = async (req, res, next) => {
 // @ Route
 // @ Access Control
 export const createPost = async (req, res, next) => {
-    let newPost = await Post.create(req.body);
+    req.body.post.images = []
+    for(const file of req.files) {
+        let image = await cloudinary.v2.uploader.upload(file.path);
+        req.body.post.images.push({
+            url: image.secure_url,
+            public_id: image.public_id
+        });
+    }
+    let newPost = await Post.create(req.body.post);
     res.redirect(`/posts/${newPost.id}`);
 }
 
@@ -45,7 +58,7 @@ export const editPost = async (req, res, next) => {
 // @ Route
 // @ Access Control
 export const updatePost = async (req, res, next) => {
-    let update = await Post.findByIdAndUpdate(req.params.id, req.body);
+    let update = await Post.findByIdAndUpdate(req.params.id, req.body.post);
     res.redirect(`/posts/${update.id}`);
 }
 

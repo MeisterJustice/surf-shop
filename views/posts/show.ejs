@@ -2,4 +2,18 @@
 <p><%= post.price %></p>
 <div><%= post.description %></div>
 <div><%= post.location %></div>
-<div><a href="/posts/<%=post.id%>/edit">Edit post</a></div>
+<div>
+    <% post.images.forEach(function(image) { %>
+        <img src="<%= image.url %>" alt="surf board image" width="200px" height="300px">
+    <% }); %>
+</div>
+<div>
+    <a href="/posts/<%=post.id%>/edit">
+        <button>Edit Post</button>
+    </a>
+</div>
+<div>
+    <form action="/posts/<%=post.id%>?_method=DELETE" method="post">
+        <input type="submit" value="delete">
+    </form>
+</div>

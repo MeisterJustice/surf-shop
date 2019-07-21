@@ -1,9 +1,12 @@
 <h1>new route</h1>
 
-<form action="/posts" method="post">
-    <div><input name="title" type="text" placeholder="title"></div>
-    <div><input name="price" type="text" placeholder="price"></div>
-    <div><textarea name="description" cols="30" rows="10" placeholder="description"></textarea></div>
-    <div><input name="location" type="text" placeholder="location"></div>
+<form action="/posts" method="post" enctype="multipart/form-data">
+    <div><input name="post[title]" type="text" placeholder="title"></div>
+    <div><input name="post[price]" type="text" placeholder="price"></div>
+    <div>
+        <input type="file" accept="images/*" name="images" multiple>
+    </div>
+    <div><textarea name="post[description]" cols="30" rows="10" placeholder="description"></textarea></div>
+    <div><input name="post[location]" type="text" placeholder="location"></div>
     <div><input type="submit"></div>
 </form>

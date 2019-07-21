@@ -1,9 +1,9 @@
 <h1>edit route</h1>
 
 <form action="/posts/<%= post.id %>?_method=PUT" method="post">
-    <div><input name="title" type="text" placeholder="title" value="<%= post.title %>"></div>
-    <div><input name="price" type="text" placeholder="price" value="<%= post.price %>"></div>
-    <div><textarea name="description" cols="30" rows="10" placeholder="description"> <%= post.description %></textarea></div>
-    <div><input name="location" type="text" placeholder="location" value="<%= post.location %>"></div>
+    <div><input name="post[title]" type="text" placeholder="title" value="<%= post.title %>"></div>
+    <div><input name="post[price]" type="text" placeholder="price" value="<%= post.price %>"></div>
+    <div><textarea name="post[description]" cols="30" rows="10" placeholder="description"> <%= post.description %></textarea></div>
+    <div><input name="post[location]" type="text" placeholder="location" value="<%= post.location %>"></div>
     <div><input type="submit"></div>
 </form>

@@ -1,7 +1,9 @@
+// require('dotenv').config();
 import express from 'express';
 import { createServer } from 'http';
 import path from 'path';
 import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import passport from 'passport';
@@ -29,6 +31,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 // express-session setup
 app.use(session({
